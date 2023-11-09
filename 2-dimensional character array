@@ -1,0 +1,46 @@
+import java.io.BufferedReader;
+		import java.io.FileReader;
+		import java.io.IOException;
+
+public class ColumnMajorOrder {
+
+         public static void main(String[] args) {
+	 String filePath = "input.txt"; 
+		        int rows = 6; 
+		        int columns = 5; 
+
+		        char[][] charArray = new char[rows][columns];
+
+		        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+		            for (int row = 0; row < rows; row++) {
+		                for (int col = 0; col < columns; col++) {
+		                    int character = reader.read();
+		                    if (character != -1) {
+		                        charArray[row][row % 2 == 0 ? col : columns - 1 - col] = (char) character;
+		                    }
+		                }
+		            }
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		            return;
+		        }
+
+		        StringBuilder extractedString = new StringBuilder();
+
+		        for (int col = 0; col < columns; col++) {
+		            for (int row = 0; row < rows; row++) {
+		                char ch = charArray[row][col];
+		                extractedString.append(ch == '\0' ? '*' : ch);
+		            }
+		        }
+
+		        System.out.println("Resulting string (column-major order):");
+		        System.out.println(extractedString.toString());
+		    }
+         {
+
+
+	}
+
+}
+
