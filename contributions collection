@@ -1,0 +1,66 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.Scanner;
+public class Contribution {
+
+
+    public void fileOperation(String inputFile, String outputFile) {
+        double max_contro = Double.MIN_VALUE;
+        double min_contro = Double.MAX_VALUE;
+        int total = 0;
+        int goal = 1000;
+        double current = 0.0;
+
+//          Reading from the file
+        try {
+            File file = new File(inputFile);
+            Scanner sc = new Scanner(file);
+            while (sc.hasNextLine()) {
+
+                double amt = Double.parseDouble(sc.nextLine());
+                current += amt;
+                total++;
+                if (amt < min_contro) {
+                    min_contro = amt;
+                }
+                if (amt > max_contro) {
+                    max_contro = amt;
+                }
+                if (current > goal) {
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error processing the file!");
+        }
+
+        double average_contro = Math.round((double) current / total);
+          
+        try {
+            FileWriter writer = new FileWriter(outputFile, true);
+            BufferedWriter out = new BufferedWriter(writer);
+            out.write( "It took " + total + " contributions to reach the goal.\nThe maximum contribution"
+                    + " received was $" + max_contro + ".\nThe minimum contribution"
+                    + " received was $" + min_contro + "\nThe average contribution amount was $"
+                    + average_contro + ".\nA total of $" + current + " was collected.");
+            out.newLine();
+            out.close();
+        } catch (Exception e) {
+    
+            System.out.println("Error processing the file!");
+        }
+
+    }
+
+    //      Driver method to test the code
+    public static void main(String[] args) {
+
+        String inputFile = "input.txt";
+        String outputFile = "output.out";
+
+        Contribution obj = new Contribution();
+        obj.fileOperation(inputFile, outputFile);
+
+    }
+}
