@@ -1,0 +1,65 @@
+import java.io.BufferedReader;
+		import java.io.FileReader;
+		import java.io.IOException;
+		
+public class TextToarray {
+
+	public static void main(String[] args) {
+	
+
+		        String fileName = "input.txt"; // Change this to your input file name
+		        int rows = 4; // Change this to the desired number of rows
+		        int columns = 5; // Change this to the desired number of columns
+
+		        char[][] charArray = new char[rows][columns];
+
+		        try {
+		            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+		            String line;
+		            StringBuilder text = new StringBuilder();
+
+		            while ((line = reader.readLine()) != null) {
+		                text.append(line);
+		            }
+		            reader.close();
+
+		            int textIndex = 0;
+
+		            for (int row = 0; row < rows; row++) {
+		                if (row % 2 == 0) {
+		                    // Fill from left to right
+		                    for (int col = 0; col < columns; col++) {
+		                        if (textIndex < text.length()) {
+		                            charArray[row][col] = text.charAt(textIndex);
+		                            textIndex++;
+		                        } else {
+		                            charArray[row][col] = '*';
+		                        }
+		                    }
+		                } else {
+		                    // Fill from right to left
+		                    for (int col = columns - 1; col >= 0; col--) {
+		                        if (textIndex < text.length()) {
+		                            charArray[row][col] = text.charAt(textIndex);
+		                            textIndex++;
+		                        } else {
+		                            charArray[row][col] = '*';
+		                        }
+		                    }
+		                }
+		            }
+
+		            // Print the 2D character array
+		            for (int i = 0; i < rows; i++) {
+		                for (int j = 0; j < columns; j++) {
+		                    System.out.print(charArray[i][j] + " ");
+		                }
+		                System.out.println();
+		            }
+		        } catch (IOException e) {
+		            System.err.println("Error reading the file: " + e.getMessage());
+		        }
+		    }
+		}
+
+
